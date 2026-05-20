@@ -1,525 +1,926 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Digital Card — Dark Luxury</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet"/>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --gold:#C9A962;
-  --gold-dim:rgba(201,169,98,.25);
-  --gold-faint:rgba(201,169,98,.08);
-  --bg:#0a0a0a;
-  --surface:#111111;
-  --surface2:#1a1a1a;
-  --text:#F5F1E8;
-  --text2:rgba(245,241,232,.55);
-  --text3:rgba(245,241,232,.3);
-  --border:rgba(255,255,255,0.06);
-}
-body{
-  font-family:'Cormorant Garamond',Georgia,serif;
-  background:var(--bg);
-  color:var(--text);
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  padding:40px 20px 60px;
-  -webkit-font-smoothing:antialiased;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ahmad Faris bin Razak - Digital Business Card</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300&display=swap" rel="stylesheet">
+    <link rel="manifest" href="../manifest.json">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <style>
+        :root {
+            --bg-page: #0a0a0a;
+            --card-front-a: #1a1a1a;
+            --card-front-b: #0d0d0d;
+            --card-back: #111111;
+            --surface-raised: #161616;
+            --accent: #C9A962;
+            --accent-soft: rgba(201, 169, 98, 0.12);
+            --accent-line: rgba(201, 169, 98, 0.27);
+            --hairline: rgba(201, 169, 98, 0.18);
+            --text-primary: #EDE6D3;
+            --text-secondary: #A89F8C;
+            --text-muted: #6B6357;
+            --shadow-card: 0 24px 60px -20px rgba(0, 0, 0, 0.75),
+                          0 0 0 1px rgba(201, 169, 98, 0.27) inset;
+            --radius-card: 16px;
+            --radius-badge: 20px;
+            --ease-luxe: cubic-bezier(0.22, 0.61, 0.36, 1);
+        }
 
-/* ── Card ── */
-.card-wrap{
-  width:340px;height:200px;
-  perspective:1000px;
-  cursor:pointer;
-  margin:0 auto 10px;
-  flex-shrink:0;
-}
-.card-inner{
-  width:100%;height:100%;
-  position:relative;
-  transform-style:preserve-3d;
-  transition:transform .55s cubic-bezier(.22,.61,.36,1);
-}
-.card-inner.flipped{transform:rotateY(180deg)}
-.card-face{
-  position:absolute;
-  top:0;left:0;
-  width:100%;height:100%;
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  border-radius:14px;
-  padding:18px 22px;
-  overflow:hidden;
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-/* ── Front ── */
-.card-front{
-  background:linear-gradient(145deg,#1c1c1c,#0d0d0d);
-  border:1px solid var(--gold-dim);
-  box-shadow:0 20px 50px rgba(0,0,0,.65);
-  display:flex;flex-direction:column;justify-content:space-between;
-}
-/* Art-deco corner ornament */
-.card-front::before{
-  content:'';
-  position:absolute;top:0;right:0;
-  width:60px;height:60px;
-  border-top:1px solid var(--gold-dim);
-  border-right:1px solid var(--gold-dim);
-  border-radius:0 14px 0 0;
-  pointer-events:none;
-}
-.front-header{
-  display:flex;justify-content:space-between;align-items:center;
-}
-.monogram{
-  width:34px;height:34px;
-  border:1px solid var(--gold-dim);
-  border-radius:4px;
-  display:flex;align-items:center;justify-content:center;
-  font-size:14px;font-weight:700;
-  letter-spacing:.06em;text-transform:uppercase;
-  color:var(--gold);
-}
-.est-tag{
-  font-size:8px;font-weight:600;
-  letter-spacing:.22em;text-transform:uppercase;
-  color:var(--text3);
-  border:1px solid var(--gold-faint);
-  padding:2px 8px;border-radius:20px;
-}
-.front-body{display:flex;flex-direction:column;gap:3px}
-.card-name{
-  font-size:20px;font-weight:700;
-  line-height:1.15;letter-spacing:-.01em;
-  color:var(--text);
-}
-.gold-rule{width:24px;height:1px;background:var(--gold);margin:5px 0}
-.card-title{
-  font-size:11px;font-weight:300;font-style:italic;
-  letter-spacing:.03em;color:var(--text2);
-}
-.card-company{
-  font-size:9px;font-weight:600;
-  letter-spacing:.2em;text-transform:uppercase;
-  color:var(--gold);margin-top:2px;
-}
+        body {
+            font-family: 'Cormorant Garamond', serif;
+            background: var(--bg-page);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            line-height: 1.5;
+        }
 
-/* ── Back ── */
-.card-back{
-  background:var(--surface);
-  border:1px solid var(--gold-dim);
-  box-shadow:0 20px 50px rgba(0,0,0,.65);
-  transform:rotateY(180deg);
-  display:flex;flex-direction:column;justify-content:space-between;
-}
-.back-header{
-  display:flex;justify-content:space-between;align-items:center;
-}
-.back-label{
-  font-size:8px;font-weight:600;
-  letter-spacing:.24em;text-transform:uppercase;
-  color:var(--text3);
-}
-.back-monogram{font-size:11px;color:var(--gold);letter-spacing:.1em}
-.contact-rows{display:flex;flex-direction:column;gap:7px;flex:1;justify-content:center}
-.c-row{display:flex;align-items:center;gap:9px}
-.c-dot{
-  width:4px;height:4px;border-radius:50%;
-  background:var(--gold);flex-shrink:0;opacity:.6;
-}
-.c-info{display:flex;flex-direction:column;gap:0}
-.c-key{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3)}
-.c-val{font-size:11px;color:var(--text2)}
-.back-divider{height:1px;background:var(--gold-faint)}
-.back-specialty{font-size:9px;font-style:italic;color:var(--text3);letter-spacing:.02em}
+        .container {
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+        }
 
-/* ── Flip hint ── */
-.flip-hint{font-size:10px;color:var(--text3);text-align:center;letter-spacing:.06em;margin-bottom:20px}
+        .card-wrapper {
+            width: 340px;
+            height: 540px;
+            perspective: 1000px;
+            margin: 0 auto 32px;
+            cursor: pointer;
+        }
 
-/* ── Info panel ── */
-.info-panel{
-  width:340px;margin:0 auto 12px;
-  background:var(--surface);
-  border:1px solid var(--gold-faint);
-  border-radius:12px;padding:16px 20px;
-  display:flex;flex-direction:column;gap:0;
-}
-.info-row{
-  display:flex;align-items:center;gap:12px;
-  padding:9px 0;
-}
-.info-row+.info-row{border-top:1px solid var(--gold-faint)}
-.info-icon{
-  width:28px;height:28px;border-radius:8px;
-  background:var(--gold-faint);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;flex-shrink:0;
-}
-.info-key{font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:1px}
-.info-val{font-size:11px;color:var(--text2)}
+        @media (min-width: 768px) {
+            .card-wrapper {
+                width: 380px;
+                height: 600px;
+            }
+        }
 
-/* ── Buttons ── */
-.actions{width:340px;margin:0 auto;display:flex;flex-direction:column;gap:9px}
-.btn{
-  width:100%;height:46px;border-radius:10px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-family:'Cormorant Garamond',Georgia,serif;
-  font-size:13px;font-weight:600;letter-spacing:.04em;
-  cursor:pointer;border:none;text-decoration:none;
-  transition:transform .15s,opacity .15s;
-}
-.btn:hover{transform:translateY(-1px);opacity:.92}
-.btn:active{transform:scale(.98)}
-.btn-gold{background:linear-gradient(135deg,#C9A962,#8C7544);color:#0a0a0a}
-.btn-wa{background:#1a2b1a;border:1px solid rgba(37,211,102,.3);color:#25d366}
-.btn-outline{background:transparent;border:1px solid var(--gold-dim);color:var(--text2)}
-.share-row{display:flex;gap:8px}
-.share-row .btn{font-size:12px;height:40px}
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 280ms var(--ease-luxe);
+        }
 
-/* ── QR ── */
-.qr-section{
-  width:340px;margin:12px auto 0;
-  background:var(--surface);border:1px solid var(--gold-faint);
-  border-radius:12px;padding:16px 20px;
-  display:flex;align-items:center;gap:14px;
-}
-.qr-box{
-  width:60px;height:60px;
-  background:#fff;border-radius:6px;
-  display:flex;align-items:center;justify-content:center;
-  overflow:hidden;flex-shrink:0;
-}
-.qr-text h4{font-size:12px;font-weight:600;color:var(--text);margin-bottom:3px}
-.qr-text p{font-size:10px;color:var(--text3);line-height:1.5;font-style:italic}
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
 
-/* ── Toast ── */
-.toast{
-  position:fixed;bottom:24px;left:50%;
-  transform:translateX(-50%) translateY(60px);
-  background:var(--surface2);border:1px solid var(--gold-dim);
-  color:var(--text);padding:9px 20px;
-  border-radius:24px;font-size:12px;font-weight:600;
-  letter-spacing:.04em;
-  transition:transform .25s cubic-bezier(.34,1.56,.64,1);
-  pointer-events:none;white-space:nowrap;z-index:999;
-}
-.toast.show{transform:translateX(-50%) translateY(0)}
+        .card-face {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+            border-radius: var(--radius-card);
+            box-shadow: var(--shadow-card);
+            padding: 32px;
+            overflow: hidden;
+        }
 
-/* ── Phase 4 Extras ─────────────────────────────────────────────────────── */
-.extras-section{width:340px;margin:10px auto 0;display:flex;flex-direction:column;gap:9px}
-.social-row{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;padding:4px 0}
-.social-btn{
-  width:40px;height:40px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;
-  text-decoration:none;border:none;cursor:pointer;
-  transition:transform .15s,opacity .15s;flex-shrink:0;
-}
-.social-btn:hover{transform:translateY(-2px);opacity:.85}
-.social-btn svg{width:18px;height:18px;flex-shrink:0}
-.extra-btn{
-  width:100%;height:44px;border-radius:12px;
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  font-size:13px;font-weight:600;
-  text-decoration:none;cursor:pointer;border:none;
-  transition:transform .15s,opacity .15s;
-}
-.extra-btn:hover{transform:translateY(-1px);opacity:.9}
-.extra-btn:active{transform:scale(.98)}
-/* ── End Phase 4 Extras ──────────────────────────────────────────────────── */
-</style>
+        .card-front {
+            background: linear-gradient(165deg, var(--card-front-a) 0%, var(--card-front-b) 100%);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-back {
+            background: var(--card-back);
+            transform: rotateY(180deg);
+        }
+
+        /* Corner brackets - only top-right and bottom-left */
+        .card-front::before,
+        .card-front::after {
+            content: '';
+            position: absolute;
+            width: 12px;
+            height: 12px;
+            border: 1px solid var(--accent-line);
+        }
+
+        .card-front::before {
+            top: 16px;
+            right: 16px;
+            border-left: none;
+            border-bottom: none;
+        }
+
+        .card-front::after {
+            bottom: 16px;
+            left: 16px;
+            border-right: none;
+            border-top: none;
+        }
+
+        /* Top hairline rule */
+        .top-rule {
+            width: 48px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        /* Monogram */
+        .monogram {
+            font-size: 48px;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.05em;
+            margin-bottom: 8px;
+            animation: fadeRise 240ms var(--ease-luxe) both;
+        }
+
+        @keyframes fadeRise {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .spacer {
+            flex: 1;
+        }
+
+        /* Name section */
+        .name-section {
+            margin-top: auto;
+        }
+
+        .name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+            margin-bottom: 12px;
+            line-height: 1.2;
+        }
+
+        @media (min-width: 768px) {
+            .name {
+                font-size: 34px;
+            }
+        }
+
+        .title {
+            font-size: 14px;
+            font-weight: 300;
+            font-style: italic;
+            color: var(--text-secondary);
+            letter-spacing: 0.04em;
+            margin-bottom: 24px;
+        }
+
+        @media (min-width: 768px) {
+            .title {
+                font-size: 15px;
+            }
+        }
+
+        /* Divider hairline */
+        .divider {
+            width: 32px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 16px;
+        }
+
+        .company {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            letter-spacing: 0.22em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        @media (min-width: 768px) {
+            .company {
+                font-size: 13px;
+            }
+        }
+
+        .location {
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.02em;
+        }
+
+        /* Card Back - Contact Section */
+        .contact-header {
+            margin-bottom: 8px;
+        }
+
+        .contact-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--accent);
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .header-rule {
+            width: 48px;
+            height: 1px;
+            background: var(--accent);
+            margin-bottom: 24px;
+        }
+
+        .contact-rows {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact-row {
+            display: grid;
+            grid-template-columns: 16px 1fr;
+            column-gap: 12px;
+            min-height: 56px;
+            align-items: start;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--hairline);
+            transition: opacity 160ms var(--ease-luxe);
+        }
+
+        .contact-row:last-child {
+            border-bottom: none;
+        }
+
+        .contact-row:hover {
+            opacity: 0.8;
+        }
+
+        /* Diamond marker */
+        .marker {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            transform: rotate(45deg);
+            margin-top: 6px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .contact-info-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+        }
+
+        .contact-info-value {
+            font-size: 14px;
+            font-weight: 400;
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+            word-break: break-word;
+            text-decoration: none;
+            display: block;
+        }
+        .contact-info-value:hover {
+            color: var(--accent-gold);
+        }
+
+        /* QR Code section on back */
+        .qr-section {
+            margin-top: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .qr-container {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            display: inline-flex;
+        }
+
+        .qr-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        /* Action Buttons */
+        .actions {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 340px;
+            margin: 0 auto;
+        }
+
+        @media (min-width: 768px) {
+            .actions {
+                max-width: 380px;
+            }
+        }
+
+        .btn {
+            height: 48px;
+            padding: 0 24px;
+            border-radius: 4px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: transform 180ms var(--ease-luxe),
+                       opacity 180ms var(--ease-luxe);
+            border: none;
+            outline: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn:hover {
+            transform: translateY(-1px);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-primary {
+            background: transparent;
+            color: var(--accent);
+            border: 1px solid var(--accent);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--hairline);
+        }
+
+        .btn-secondary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--accent-soft);
+            opacity: 0;
+            transition: opacity 180ms var(--ease-luxe);
+        }
+
+        .btn-secondary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-secondary span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-weight: 700;
+            font-size: 9px;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            background: var(--accent-soft);
+            color: var(--accent);
+            border: 1px solid var(--accent-line);
+            margin-top: 8px;
+        }
+
+        /* Flip instruction */
+        .flip-hint {
+            text-align: center;
+            font-size: 11px;
+            font-weight: 400;
+            color: var(--text-muted);
+            letter-spacing: 0.08em;
+            margin-top: 24px;
+            text-transform: uppercase;
+        }
+
+        /* Toast notification */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--surface-raised);
+            color: var(--text-primary);
+            padding: 16px 24px;
+            border-radius: 8px;
+            border: 1px solid var(--accent-line);
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            opacity: 0;
+            transition: all 280ms var(--ease-luxe);
+            z-index: 1000;
+            box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+        }
+
+        .toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Bio section on back */
+        .bio-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--hairline);
+        }
+
+        .bio-label {
+            font-size: 10px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            letter-spacing: 0.28em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .bio-text {
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-primary);
+            letter-spacing: 0.01em;
+            line-height: 1.6;
+        }
+
+        /* Accessibility */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border-width: 0;
+        }
+
+        /* Loading state */
+        .loading {
+            opacity: 0.5;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="card-wrapper" id="cardWrapper">
+            <div class="card-inner" id="cardInner">
+                <!-- Card Front -->
+                <div class="card-face card-front">
+                    <div class="top-rule"></div>
+                    <div class="monogram" id="monogram">AF</div>
+                    <div class="spacer"></div>
+                    <div class="name-section">
+                        <h1 class="name" id="fullName">Ahmad Faris bin Razak</h1>
+                        <p class="title" id="titleText">Founder & Chief Executive Officer</p>
+                        <div class="divider"></div>
+                        <p class="company" id="companyName">Pixel Reka Sdn Bhd</p>
+                        <p class="location" id="locationText">Kuala Lumpur, Malaysia</p>
+                    </div>
+                </div>
 
-<div class="card-wrap" id="cardWrap">
-  <div class="card-inner" id="cardInner">
+                <!-- Card Back -->
+                <div class="card-face card-back">
+                    <div class="contact-header">
+                        <div class="contact-label">Contact</div>
+                        <div class="header-rule"></div>
+                    </div>
 
-    <div class="card-face card-front">
-      <div class="front-header">
-        <div class="monogram" id="fMonogram">RS</div>
-        <div class="est-tag">Est. 2019</div>
-      </div>
-      <div class="front-body">
-        <div class="card-name" id="fName">Ravi Sandrasegaran</div>
-        <div class="gold-rule"></div>
-        <div class="card-title" id="fTitle">Managing Partner, Corporate & M&A</div>
-        <div class="card-company" id="fCompany">Sandrasegaran & Lee Advocates</div>
-      </div>
+                    <div class="contact-rows">
+                        <div class="contact-row">
+                            <div class="marker"></div>
+                            <div class="contact-info">
+                                <div class="contact-info-label">Direct</div>
+                                <a class="contact-info-value" id="phoneDisplay" href="#">+60 12 345 6789</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-row">
+                            <div class="marker"></div>
+                            <div class="contact-info">
+                                <div class="contact-info-label">Email</div>
+                                <a class="contact-info-value" id="emailDisplay" href="#">faris@pixelreka.com.my</a>
+                            </div>
+                        </div>
+
+                        <div class="contact-row">
+                            <div class="marker"></div>
+                            <div class="contact-info">
+                                <div class="contact-info-label">Website</div>
+                                <a class="contact-info-value" id="websiteDisplay" href="#" target="_blank" rel="noopener noreferrer">pixelreka.com.my</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bio-section">
+                        <div class="bio-label">About</div>
+                        <p class="bio-text" id="bioText">Building digital solutions for Malaysian SMEs</p>
+                    </div>
+
+                    <div class="qr-section">
+                        <div class="qr-container">
+                            <div id="qrcode"></div>
+                        </div>
+                        <div class="qr-label">Scan to Save</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-primary" id="downloadVCard">
+                <span>Save Contact</span>
+            </button>
+
+            <div class="btn-row">
+                <button class="btn btn-secondary" id="copyLink">
+                    <span>Copy Link</span>
+                </button>
+                <button class="btn btn-secondary" id="shareBtn">
+                    <span>Share</span>
+                </button>
+            </div>
+
+            <a class="btn btn-secondary" id="whatsappBtn" href="#" target="_blank" rel="noopener noreferrer">
+                <span>WhatsApp</span>
+            </a>
+        </div>
+
+        <p class="flip-hint">Tap card to flip</p>
     </div>
 
-    <div class="card-face card-back">
-      <div class="back-header">
-        <div class="back-label">Contact</div>
-        <div class="back-monogram" id="bMonogram">S&L</div>
-      </div>
-      <div class="contact-rows">
-        <div class="c-row">
-          <div class="c-dot"></div>
-          <div class="c-info"><div class="c-key">Phone</div><div class="c-val" id="bPhone">+60 16-772 1340</div></div>
-        </div>
-        <div class="c-row">
-          <div class="c-dot"></div>
-          <div class="c-info"><div class="c-key">Email</div><div class="c-val" id="bEmail">ravi@sandrasegaranlee.com.my</div></div>
-        </div>
-        <div class="c-row">
-          <div class="c-dot"></div>
-          <div class="c-info"><div class="c-key">Office</div><div class="c-val" id="bLoc">Kuala Lumpur, Malaysia</div></div>
-        </div>
-      </div>
-      <div class="back-divider"></div>
-      <div class="back-specialty" id="bSpecialty">Cross-border M&A and capital markets advisory</div>
-    </div>
+    <div class="toast" id="toast"></div>
 
-  </div>
-</div>
+    <script>
+        // Configuration
+        const CONFIG = {
+            name: "Ahmad Faris bin Razak",
+            title: "Founder & CEO",
+            company: "Pixel Reka Sdn Bhd",
+            phone: "+60123456789",
+            email: "faris@pixelreka.com.my",
+            website: "https://pixelreka.com.my",
+            location: "Kuala Lumpur, Malaysia",
+            bio: "Building digital solutions for Malaysian SMEs",
+            color: "#C9A962",
+            whatsapp_message: "Hi Faris, I found your digital card!",
+            social: { linkedin: "", instagram: "", facebook: "", twitter: "", tiktok: "", youtube: "", pinterest: "" },
+            gallery: [],
+            video_url: "",
+            video_caption: "",
+            booking_url: "",
+            maps_url: "",
+            custom_links: []
+        };
 
-<div class="flip-hint">Tap to reveal contact details</div>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeCard();
+            initializeQRCode();
+            initializeEventListeners();
+        });
 
-<div class="info-panel">
-  <div class="info-row">
-    <div class="info-icon">📞</div>
-    <div><div class="info-key">Direct Line</div><div class="info-val" id="iPhone">+60 16-772 1340</div></div>
-  </div>
-  <div class="info-row">
-    <div class="info-icon">✉️</div>
-    <div><div class="info-key">Email</div><div class="info-val" id="iEmail">ravi@sandrasegaranlee.com.my</div></div>
-  </div>
-  <div class="info-row">
-    <div class="info-icon">📍</div>
-    <div><div class="info-key">Office</div><div class="info-val" id="iLoc">Kuala Lumpur, Malaysia</div></div>
-  </div>
-</div>
+        // Initialize card content
+        function initializeCard() {
+            // Generate monogram from name
+            const nameParts = CONFIG.name.split(' ');
+            const monogram = (nameParts[0][0] + (nameParts[1] ? nameParts[1][0] : nameParts[0][1])).toUpperCase();
+            document.getElementById('monogram').textContent = monogram;
 
-<div class="actions">
-  <button class="btn btn-gold" onclick="saveContact()">💾 Save to Contacts</button>
-  <button class="btn btn-wa" onclick="openWhatsApp()">💬 WhatsApp</button>
-  <div class="share-row">
-    <button class="btn btn-outline" onclick="copyLink()">🔗 Copy Link</button>
-    <button class="btn btn-outline" onclick="shareCard()">↗ Share</button>
-  </div>
-</div>
+            // Set card content
+            document.getElementById('fullName').textContent = CONFIG.name;
+            document.getElementById('titleText').textContent = CONFIG.title;
+            document.getElementById('companyName').textContent = CONFIG.company;
+            document.getElementById('locationText').textContent = CONFIG.location;
+            const phoneEl = document.getElementById('phoneDisplay');
+            phoneEl.textContent = formatPhoneDisplay(CONFIG.phone);
+            phoneEl.href = `tel:${CONFIG.phone.replace(/[^0-9+]/g, '')}`;
 
-<div class="qr-section">
-  <div class="qr-box"><div id="qrCode"></div></div>
-  <div class="qr-text">
-    <h4>Scan to Connect</h4>
-    <p>Share this card by pointing your camera at the QR code above</p>
-  </div>
-</div>
+            const emailEl = document.getElementById('emailDisplay');
+            emailEl.textContent = CONFIG.email;
+            emailEl.href = `mailto:${CONFIG.email}`;
 
-<div class="toast" id="toast">Copied!</div>
+            const websiteEl = document.getElementById('websiteDisplay');
+            websiteEl.textContent = CONFIG.website.replace('https://', '').replace('http://', '');
+            websiteEl.href = CONFIG.website.startsWith('http') ? CONFIG.website : `https://${CONFIG.website}`;
+            document.getElementById('bioText').textContent = CONFIG.bio;
 
-<script>
-const CONFIG = {
-  name:          "Ravi Sandrasegaran",
-  initials:      "RS",
-  company_short: "S&L",
-  title:         "Managing Partner, Corporate & M&A",
-  company:       "Sandrasegaran & Lee Advocates",
-  phone:         "+60167721340",
-  phone_display: "+60 16-772 1340",
-  email:         "ravi@sandrasegaranlee.com.my",
-  location:      "Kuala Lumpur, Malaysia",
-  specialty:     "Cross-border M&A and capital markets advisory",
-  wa_message:    "Hi Dato' Ravi, I found your digital card. I'd like to connect with you.",
-  social: {
-    linkedin:  "https://linkedin.com/in/",
-    twitter:   ""
-  },
-  custom_links: [],
-  booking_url:  "",
-  maps_url:     ""
-};
-window.CONFIG = CONFIG;
+            // Set WhatsApp link
+            const whatsappUrl = `https://wa.me/${CONFIG.phone.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(CONFIG.whatsapp_message)}`;
+            document.getElementById('whatsappBtn').href = whatsappUrl;
+        }
 
-document.getElementById('fMonogram').textContent = CONFIG.initials;
-document.getElementById('fName').textContent     = CONFIG.name;
-document.getElementById('fTitle').textContent    = CONFIG.title;
-document.getElementById('fCompany').textContent  = CONFIG.company;
-document.getElementById('bMonogram').textContent = CONFIG.company_short;
-document.getElementById('bPhone').innerHTML      = `<a href="tel:${CONFIG.phone}" style="color:inherit;text-decoration:none">${CONFIG.phone_display}</a>`;
-document.getElementById('bEmail').innerHTML      = `<a href="mailto:${CONFIG.email}" style="color:inherit;text-decoration:none">${CONFIG.email}</a>`;
-document.getElementById('bLoc').textContent      = CONFIG.location;
-document.getElementById('bSpecialty').textContent= CONFIG.specialty;
-document.getElementById('iPhone').innerHTML      = `<a href="tel:${CONFIG.phone}" style="color:inherit;text-decoration:none">${CONFIG.phone_display}</a>`;
-document.getElementById('iEmail').innerHTML      = `<a href="mailto:${CONFIG.email}" style="color:inherit;text-decoration:none">${CONFIG.email}</a>`;
-document.getElementById('iLoc').innerHTML        = `<a href="https://maps.google.com/?q=${encodeURIComponent(CONFIG.location)}" target="_blank" rel="noopener" style="color:inherit;text-decoration:none">${CONFIG.location}</a>`;
+        // Format phone number for display
+        function formatPhoneDisplay(phone) {
+            // Simple formatting for Malaysian numbers: +60 12 345 6789
+            const cleaned = phone.replace(/[^0-9+]/g, '');
+            if (cleaned.startsWith('+60')) {
+                const rest = cleaned.substring(3);
+                if (rest.length >= 9) {
+                    return `+60 ${rest.substring(0, 2)} ${rest.substring(2, 5)} ${rest.substring(5)}`;
+                }
+            }
+            return phone;
+        }
 
-document.getElementById('cardWrap').addEventListener('click', () => {
-  document.getElementById('cardInner').classList.toggle('flipped');
-});
+        // Initialize QR Code
+        function initializeQRCode() {
+            const qrContainer = document.getElementById('qrcode');
+            const vCardData = generateVCard();
+            
+            if (typeof QRCode !== 'undefined') {
+                new QRCode(qrContainer, {
+                    text: vCardData,
+                    width: 120,
+                    height: 120,
+                    colorDark: "#000000",
+                    colorLight: "#ffffff",
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            }
+        }
 
-new QRCode(document.getElementById('qrCode'), {
-  text: window.location.href,
-  width: 60, height: 60,
-  colorDark:"#000000", colorLight:"#ffffff",
-  correctLevel: QRCode.CorrectLevel.M
-});
+        // Generate vCard data
+        function generateVCard() {
+            const vcard = [
+                'BEGIN:VCARD',
+                'VERSION:3.0',
+                `FN:${CONFIG.name}`,
+                `ORG:${CONFIG.company}`,
+                `TITLE:${CONFIG.title}`,
+                `TEL;TYPE=CELL:${CONFIG.phone}`,
+                `EMAIL:${CONFIG.email}`,
+                `URL:${CONFIG.website}`,
+                `ADR;TYPE=WORK:;;${CONFIG.location}`,
+                `NOTE:${CONFIG.bio}`,
+                'END:VCARD'
+            ].join('\n');
+            
+            return vcard;
+        }
 
-function saveContact() {
-  const vcf = ['BEGIN:VCARD','VERSION:3.0',
-    `FN:${CONFIG.name}`,`ORG:${CONFIG.company}`,`TITLE:${CONFIG.title}`,
-    `TEL;TYPE=CELL:${CONFIG.phone}`,`EMAIL:${CONFIG.email}`,
-    `ADR;TYPE=WORK:;;;${CONFIG.location};;;`,`NOTE:${CONFIG.specialty}`,
-    'END:VCARD'].join('\r\n');
-  const a = Object.assign(document.createElement('a'), {
-    href: URL.createObjectURL(new Blob([vcf],{type:'text/vcard'})),
-    download: `${CONFIG.name.replace(/\s+/g,'-')}.vcf`
-  });
-  a.click();
-  showToast('Contact saved');
-}
-function openWhatsApp() {
-  window.open(`https://wa.me/${CONFIG.phone}?text=${encodeURIComponent(CONFIG.wa_message)}`,'_blank');
-}
-function copyLink() {
-  navigator.clipboard.writeText(window.location.href).then(()=>showToast('Link copied'));
-}
-function shareCard() {
-  navigator.share ? navigator.share({title:CONFIG.name,url:window.location.href}) : copyLink();
-}
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2000);
-}
-</script>
+        // Initialize event listeners
+        function initializeEventListeners() {
+            const cardWrapper = document.getElementById('cardWrapper');
+            const cardInner = document.getElementById('cardInner');
+            const downloadBtn = document.getElementById('downloadVCard');
+            const copyBtn = document.getElementById('copyLink');
+            const shareBtn = document.getElementById('shareBtn');
 
-<!-- Phase 4: Social Links, Custom Buttons, Booking/Location -->
-<script>
-(function(){
-  var C = window.CONFIG || {};
+            // Card flip
+            let isFlipped = false;
+            cardWrapper.addEventListener('click', function(e) {
+                // Don't flip if clicking a button or link
+                if (e.target.closest('button') || e.target.closest('a')) {
+                    return;
+                }
+                
+                isFlipped = !isFlipped;
+                if (isFlipped) {
+                    cardInner.classList.add('flipped');
+                } else {
+                    cardInner.classList.remove('flipped');
+                }
+            });
 
-  // Social platform definitions
-  var PLATFORMS = [
-    { key:'linkedin',  label:'LinkedIn',  bg:'#0A66C2', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>' },
-    { key:'instagram', label:'Instagram', bg:'#E1306C', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>' },
-    { key:'facebook',  label:'Facebook',  bg:'#1877F2', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>' },
-    { key:'twitter',   label:'X / Twitter', bg:'#000', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.742l7.737-8.835L1.254 2.25H8.08l4.259 5.631 5.905-5.631zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>' },
-    { key:'tiktok',    label:'TikTok',    bg:'#010101', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.77a4.85 4.85 0 01-1.01-.08z"/></svg>' },
-    { key:'youtube',   label:'YouTube',   bg:'#FF0000', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>' },
-    { key:'pinterest', label:'Pinterest', bg:'#E60023', fg:'#fff',
-      svg:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.084 3.163 9.426 7.627 11.174-.105-.949-.2-2.405.042-3.441.218-.937 1.407-5.965 1.407-5.965s-.359-.719-.359-1.782c0-1.668.967-2.914 2.171-2.914 1.023 0 1.518.769 1.518 1.69 0 1.029-.655 2.568-.994 3.995-.283 1.194.599 2.169 1.777 2.169 2.133 0 3.772-2.249 3.772-5.495 0-2.873-2.064-4.882-5.012-4.882-3.414 0-5.418 2.561-5.418 5.207 0 1.031.397 2.138.893 2.738a.36.36 0 01.083.345l-.333 1.36c-.053.22-.174.267-.402.161-1.499-.698-2.436-2.889-2.436-4.649 0-3.785 2.75-7.262 7.929-7.262 4.163 0 7.398 2.967 7.398 6.931 0 4.136-2.607 7.464-6.227 7.464-1.216 0-2.359-.632-2.75-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24 12 24c6.627 0 12-5.373 12-12S18.627 0 12 0z"/></svg>' }
-  ];
+            // Download vCard
+            downloadBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                downloadVCard();
+            });
 
-  // Accent color from CSS variable or fallback
-  function getAccent() {
-    return getComputedStyle(document.documentElement)
-      .getPropertyValue('--accent').trim() || '#6366f1';
-  }
+            // Copy link
+            copyBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                copyToClipboard(window.location.href);
+            });
 
-  function hexToRgb(hex) {
-    var r = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return r ? [parseInt(r[1],16), parseInt(r[2],16), parseInt(r[3],16)] : [99,102,241];
-  }
+            // Share button
+            shareBtn.addEventListener('click', function(e) {
+                e.stopPropagation();
+                shareCard();
+            });
 
-  function buildSection() {
-    var social   = C.social || {};
-    var links    = C.custom_links || [];
-    var booking  = C.booking_url || '';
-    var location = C.location || '';
-    var mapsUrl  = C.maps_url || ('https://maps.google.com/?q=' + encodeURIComponent(location));
+            // Keyboard accessibility for card flip
+            cardWrapper.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    cardWrapper.click();
+                }
+            });
 
-    var hasSocial  = PLATFORMS.some(function(p){ return social[p.key]; });
-    var hasLinks   = links.length > 0;
-    var hasBooking = !!booking;
-    var hasLoc     = !!location;
+            // Make card focusable
+            cardWrapper.setAttribute('tabindex', '0');
+            cardWrapper.setAttribute('role', 'button');
+            cardWrapper.setAttribute('aria-label', 'Flip business card');
+        }
 
-    if (!hasSocial && !hasLinks && !hasBooking && !hasLoc) return;
+        // Download vCard
+        function downloadVCard() {
+            const vCardData = generateVCard();
+            const blob = new Blob([vCardData], { type: 'text/vcard;charset=utf-8' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            
+            const fileName = CONFIG.name.replace(/\s+/g, '_') + '.vcf';
+            link.href = url;
+            link.download = fileName;
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            window.URL.revokeObjectURL(url);
+            
+            showToast('Contact saved successfully');
+        }
 
-    var accent = getAccent();
-    var rgb    = hexToRgb(accent);
-    var accentRgba = 'rgba('+rgb[0]+','+rgb[1]+','+rgb[2]+',';
+        // Copy to clipboard
+        function copyToClipboard(text) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text)
+                    .then(() => {
+                        showToast('Link copied to clipboard');
+                    })
+                    .catch(() => {
+                        fallbackCopy(text);
+                    });
+            } else {
+                fallbackCopy(text);
+            }
+        }
 
-    var section = document.createElement('div');
-    section.className = 'extras-section';
+        // Fallback copy method
+        function fallbackCopy(text) {
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            textArea.style.position = 'fixed';
+            textArea.style.left = '-999999px';
+            textArea.style.top = '-999999px';
+            document.body.appendChild(textArea);
+            textArea.focus();
+            textArea.select();
+            
+            try {
+                document.execCommand('copy');
+                showToast('Link copied to clipboard');
+            } catch (err) {
+                showToast('Failed to copy link');
+            }
+            
+            document.body.removeChild(textArea);
+        }
 
-    // ── Social icons ──
-    if (hasSocial) {
-      var row = document.createElement('div');
-      row.className = 'social-row';
-      PLATFORMS.forEach(function(p) {
-        var url = social[p.key];
-        if (!url) return;
-        var a = document.createElement('a');
-        a.href = url;
-        a.target = '_blank';
-        a.rel = 'noopener noreferrer';
-        a.className = 'social-btn';
-        a.title = p.label;
-        a.style.cssText = 'background:'+accentRgba+'0.12);border:1px solid '+accentRgba+'0.3);color:'+accent+';';
-        a.innerHTML = p.svg;
-        row.appendChild(a);
+        // Share card
+        function shareCard() {
+            const shareData = {
+                title: CONFIG.name,
+                text: `${CONFIG.name} - ${CONFIG.title} at ${CONFIG.company}`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData)
+                    .then(() => {
+                        showToast('Card shared successfully');
+                    })
+                    .catch((err) => {
+                        if (err.name !== 'AbortError') {
+                            copyToClipboard(window.location.href);
+                        }
+                    });
+            } else {
+                copyToClipboard(window.location.href);
+            }
+        }
+
+        // Show toast notification
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Prevent context menu on card (optional)
+        document.getElementById('cardWrapper').addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        // Add touch feedback for mobile
+        const buttons = document.querySelectorAll('.btn');
+        buttons.forEach(button => {
+            button.addEventListener('touchstart', function() {
+                this.style.opacity = '0.7';
+            });
+            
+            button.addEventListener('touchend', function() {
+                this.style.opacity = '1';
+            });
+            
+            button.addEventListener('touchcancel', function() {
+                this.style.opacity = '1';
+            });
+        });
+
+        // Preload flip animation
+        setTimeout(() => {
+            document.getElementById('cardInner').style.transition = 'transform 280ms cubic-bezier(0.22, 0.61, 0.36, 1)';
+        }, 100);
+
+        // Add entrance animation
+        window.addEventListener('load', function() {
+            document.querySelector('.card-wrapper').style.opacity = '0';
+            document.querySelector('.card-wrapper').style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                document.querySelector('.card-wrapper').style.transition = 'opacity 400ms cubic-bezier(0.22, 0.61, 0.36, 1), transform 400ms cubic-bezier(0.22, 0.61, 0.36, 1)';
+                document.querySelector('.card-wrapper').style.opacity = '1';
+                document.querySelector('.card-wrapper').style.transform = 'translateY(0)';
+            }, 50);
+        });
+    </script>
+
+    <!-- Phase 4: Interactive components -->
+    <div id="booking-container" style="padding:0 20px 8px"></div>
+    <div id="social-container" style="padding:0 20px 8px"></div>
+    <div id="gallery-container" style="padding:0 20px 16px"></div>
+    <div id="video-container" style="padding:0 20px 16px"></div>
+    <script type="module">
+      import { initBookingLocation } from '../components/booking-location.js';
+      import { initSocialLinks } from '../components/social-links.js';
+      import { initGallery } from '../components/gallery.js';
+      import { initVideoEmbed } from '../components/video-embed.js';
+      document.addEventListener('DOMContentLoaded', () => {
+        initBookingLocation('booking-container');
+        initSocialLinks('social-container');
+        initGallery('gallery-container');
+        initVideoEmbed('video-container');
       });
-      section.appendChild(row);
-    }
-
-    // ── Custom link buttons ──
-    links.forEach(function(link) {
-      if (!link.url) return;
-      var a = document.createElement('a');
-      a.href = link.url;
-      a.target = '_blank';
-      a.rel = 'noopener noreferrer';
-      a.className = 'extra-btn';
-      a.style.cssText = 'background:'+accentRgba+'0.1);border:1px solid '+accentRgba+'0.25);color:'+accent+';font-family:inherit;';
-      a.innerHTML = (link.icon ? '<span style="font-size:16px">'+link.icon+'</span> ' : '') + (link.label || link.url);
-      section.appendChild(a);
-    });
-
-    // ── Booking button ──
-    if (hasBooking) {
-      var ab = document.createElement('a');
-      ab.href = booking;
-      ab.target = '_blank';
-      ab.rel = 'noopener noreferrer';
-      ab.className = 'extra-btn';
-      ab.style.cssText = 'background:'+accentRgba+'0.12);border:1px solid '+accentRgba+'0.3);color:'+accent+';font-family:inherit;';
-      ab.innerHTML = '<span style="font-size:16px">📅</span> Book a Meeting';
-      section.appendChild(ab);
-    }
-
-    // ── Location button ──
-    if (hasLoc) {
-      var al = document.createElement('a');
-      al.href = mapsUrl;
-      al.target = '_blank';
-      al.rel = 'noopener noreferrer';
-      al.className = 'extra-btn';
-      al.style.cssText = 'background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);color:#10b981;font-family:inherit;';
-      al.innerHTML = '<span style="font-size:16px">📍</span> ' + location;
-      section.appendChild(al);
-    }
-
-    // Insert: find .qr-section and insert before it, or append to body
-    var qr = document.querySelector('.qr-section');
-    if (qr) {
-      qr.parentNode.insertBefore(section, qr);
-    } else {
-      document.body.appendChild(section);
-    }
-  }
-
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', buildSection);
-  } else {
-    buildSection();
-  }
-})();
-</script>
-<!-- End Phase 4 Extras -->
+    </script>
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('../service-worker.js');
+      }
+    </script>
 </body>
 </html>
