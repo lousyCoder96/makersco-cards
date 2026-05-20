@@ -102,8 +102,12 @@
             position: relative;
             z-index: 1;
         }
-        
-        /* aspect-ratio stays landscape on all screen sizes */
+
+        @media (max-width: 420px) {
+            .card-stage {
+                aspect-ratio: 1.2 / 1; /* squarer on mobile so content fits */
+            }
+        }
         
         .card {
             position: relative;
